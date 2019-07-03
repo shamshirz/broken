@@ -8,6 +8,7 @@ if (app.documents.length > 0) {
     var bkMensMasks = filter(bkArtLayer.groupItems, isMaleMask);
     var bkWomensMasks = filter(bkArtLayer.pathItems, isFemaleMask);
 
+    // For each male mask: find the cooresponding female mask, and create a scaled duplicate
     for (var i = 0; i < bkMensMasks.length; i++) {
       var bkWomensArt = findFemaleCounterpart(bkWomensMasks, bkMensMasks[i].name);
 
@@ -24,7 +25,7 @@ if (app.documents.length > 0) {
   }
 }
 
-// Take the new mask, and use the female mask to move and scale it
+// Take the working mask, and use the female mask to move and scale it
 // Warning: This has side effects (AKA if modifies the images), this is the meat.
 // (Mask, Mask) :: NoReturn
 function createScaledFemaleMask(workingMask, femaleArt) {
