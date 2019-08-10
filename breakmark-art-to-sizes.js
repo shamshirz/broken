@@ -1,3 +1,4 @@
+//breakmark art to sizes
 // Not actually Javascript, it's ExtendScript, basically ECMA3
 if (app.documents.length > 0) {
   var bkDoc = app.activeDocument;
@@ -21,6 +22,8 @@ if (app.documents.length > 0) {
         }
       }
     }
+
+    bkArtLayer.remove();
 
     newFile = new File(bkDoc.path + "/breakmark-all-sizes.ai");
     bkDoc.saveAs(newFile);
