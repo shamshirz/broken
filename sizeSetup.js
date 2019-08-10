@@ -23,6 +23,8 @@ if (app.documents.length > 0) {
       }
     }
 
+    bkArtLayer.remove();
+
     newFile = new File(bkDoc.path + "/breakmark-all-sizes.ai");
     bkDoc.saveAs(newFile);
   } else {

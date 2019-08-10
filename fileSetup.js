@@ -4,7 +4,7 @@ if (app.documents.length > 0) {
   var bkDoc = app.activeDocument;
 
   // check for breakmark template
-  if (bkDoc.name == "breakmark-template.ai") {
+  if (bkDoc.name == "breakmark-all-sizes.ai") {
     var bkProducts = [
       {
         name: "111",
@@ -115,7 +115,8 @@ if (app.documents.length > 0) {
         ]
       }
     ];
-
+    var bkSizes = [ "xs", "sm", "md", "lg", "xl" ];
+    
   } else {
     alert("Open and select the breakmark setup file first.");
   }
