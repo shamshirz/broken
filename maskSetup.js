@@ -1,3 +1,4 @@
+//breakmark mens art to womens art
 // Not actually Javascript, it's ExtendScript, basically ECMA3
 if (app.documents.length > 0) {
   var bkDoc = app.activeDocument;
