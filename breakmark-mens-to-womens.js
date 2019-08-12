@@ -31,15 +31,23 @@ if (app.documents.length > 0) {
 // (Mask, Mask) :: NoReturn
 function createScaledFemaleMask(workingMask, femaleArt) {
   var workingMaskClip = workingMask.pathItems[0];
-  var scale = femaleArt.height / workingMaskClip.height * 100;
+  var scale = 100;
+
+  if (workingMask.height > workingMask.width) {
+    scale = femaleArt.height / workingMaskClip.height * 100;
+  } else {
+    scale = femaleArt.width / workingMaskClip.width * 100;
+  }
 
   workingMask.resize(scale, scale);
 
-  var center = femaleArt.left + femaleArt.width / 2;
+  var horizontalCenter = femaleArt.left + femaleArt.width / 2;
   var offsetLeft = workingMaskClip.left + workingMaskClip.width / 2 - workingMask.left;
-  var left = center - offsetLeft;
-  var offsetTop = workingMaskClip.top - workingMask.top;
-  var top = femaleArt.top - offsetTop;
+  var left = horizontalCenter - offsetLeft;
+  
+  var verticalCenter = femaleArt.top + femaleArt.height / 2;
+  var offsetTop = workingMaskClip.top + workingMaskClip.height / 2 - workingMask.top;
+  var top = verticalCenter - offsetTop;
 
   workingMask.position = [left, top];
   workingMask.name = femaleArt.name;
