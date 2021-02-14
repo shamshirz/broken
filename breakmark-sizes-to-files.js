@@ -2,6 +2,8 @@
 // Not actually Javascript, it's ExtendScript, basically ECMA3
 if (app.documents.length > 0) {
   var bkDoc = app.activeDocument;
+  var allArtboards = bkDoc.artboards;
+  var original_file = bkDoc.fullName;
 
   // check for breakmark template
   if (bkDoc.name == "breakmark-all-sizes.ai") {
@@ -115,9 +117,56 @@ if (app.documents.length > 0) {
         ]
       }
     ];
-    var bkSizes = [ "xs", "sm", "md", "lg", "xl" ];
+    var bkSizes = [ "XS", "SM", "MD", "LG", "XL" ];
     
+    //will make a new file (per size) for each product
+    //for (var product = 0; product < bkProducts.length; product++) {
+      var currentProduct = bkProducts[0];
+
+      //loop through artboards and remove any unneeded
+      for (var artboard = 0; artboard < allArtboards.length; artboard++) {
+        var currentArtboard = allArtboards[artboard];
+        var productNeedsArtboard = false;
+
+        //loop through pieces in current product to check for match
+        for (var piece = 0; piece < currentProduct.pieces.length; piece++) {
+          var currentPiece = currentProduct.pieces[piece];
+
+          if (currentArtboard.name == currentPiece) {
+            productNeedsArtboard = true;
+            break;
+          }
+        }
+
+        if (productNeedsArtboard) {
+          productNeedsArtboard = false;
+        } else {
+          allArtboards.setActiveArtboardIndex(artboard);
+          bkDoc.selectObjectsOnActiveArtboard();
+          app.cut();
+          currentArtboard.remove();
+        }
+      }
+    //}
   } else {
     alert("Open and select the breakmark setup file first.");
   }
 }
+
+// Returns new list
+// (List a, fxn a -> Boolean) :: List a
+function filter(list, fxn) {
+  var newList = [];
+  for (var i = 0; i < list.length; i++) {
+    item = list[i];
+    if (fxn(item)) {
+      newList.push(item)
+    }
+  }
+  return newList;
+}
+
+// newFile = new File(bkDoc.path + ".ai");
+// bkDoc.saveAs(newFile);
+// bkDoc.close();
+// app.open(File(original_file));
